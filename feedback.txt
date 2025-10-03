@@ -1,0 +1,22 @@
+Your test suite did not compile!
+
+tests/tests.cc:81:96: error: expected ';' after do/while statement
+   81 |   REQUIRE_THROWS_AS(atm.RegisterAccount(8, 2394, "LeBron James", 80000), std::invalid_argument)
+      |                                                                                                ^
+      |                                                                                                ;
+tests/tests.cc:87:38: error: too few arguments to function call, expected 3, have 1
+   87 |   REQUIRE_THROWS(atm.WithdrawCash(100));
+      |                  ~~~~~~~~~~~~~~~~    ^
+tests/catch.hpp:17679:106: note: expanded from macro 'REQUIRE_THROWS'
+ 17679 | #define REQUIRE_THROWS( ... ) INTERNAL_CATCH_THROWS( "REQUIRE_THROWS", Catch::ResultDisposition::Normal, __VA_ARGS__ )
+       |                                                                                                          ^~~~~~~~~~~
+tests/catch.hpp:2746:35: note: expanded from macro 'INTERNAL_CATCH_THROWS'
+ 2746 |                 static_cast<void>(__VA_ARGS__); \
+      |                                   ^~~~~~~~~~~
+includes/atm.hpp:21:8: note: 'WithdrawCash' declared here
+   21 |   void WithdrawCash(unsigned int card_num, unsigned int pin, double amount);
+      |        ^            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2 errors generated.
+
+
+score: 0/5
