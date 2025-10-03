@@ -40,6 +40,9 @@ void Atm::RegisterAccount(unsigned int card_num,
                           unsigned int pin,
                           const std::string& owner_name,
                           double balance) {
+  if (stored_accounts_.contains({card_num, pin})) {
+    throw std::invalid_argument("Account Already Created");
+  }
   Account new_account = {owner_name, balance};
   stored_accounts_[{card_num, pin}] = new_account;
   account_transactions_[{card_num, pin}] = {};
@@ -48,6 +51,8 @@ void Atm::RegisterAccount(unsigned int card_num,
 void Atm::WithdrawCash(unsigned int card_num, unsigned int pin, double amount) {
   if (!stored_accounts_.contains({card_num, pin})) {
     throw std::invalid_argument("Invalid Card Number/PIN");
+  } else if (amount < 0) {
+    throw std::invalid_argument("Cannot withdraw a negative amount");
   }
   Account& account = stored_accounts_[{card_num, pin}];
   if (account.balance - amount >= 0) {
@@ -63,10 +68,10 @@ void Atm::DepositCash(unsigned int card_num, unsigned int pin, double amount) {
   if (!stored_accounts_.contains({card_num, pin})) {
     throw std::invalid_argument("Invalid Card Number/PIN");
   }
-  if (amount < 0) {
+  if (amount < 0.0) {
     throw std::invalid_argument("Cannot deposit a negative amount");
   }
-  Account account = stored_accounts_[{card_num, pin}];
+  Account& account = stored_accounts_[{card_num, pin}];
   account.balance += amount;
   account_transactions_[{card_num, pin}].push_back(
       CreateTransactionRecord("Deposit", amount, account.balance));
@@ -75,6 +80,9 @@ void Atm::DepositCash(unsigned int card_num, unsigned int pin, double amount) {
 void Atm::PrintLedger(const std::string& file_path,
                       unsigned int card_num,
                       unsigned int pin) {
+  if (!stored_accounts_.contains({card_num, pin})) {
+    throw std::invalid_argument("Invalid Card Number/PIN");
+  }
   std::ofstream ofs{file_path};
   const Account& account = stored_accounts_[{card_num, pin}];
   const std::vector<std::string>& transactions =
