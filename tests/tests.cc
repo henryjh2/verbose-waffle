@@ -84,5 +84,17 @@ TEST_CASE("Register Account", "[Register Account]") {
 TEST_CASE("Withdraw Cash", "[Withdraw Cash]") {
   Atm atm;
   atm.RegisterAccount(67657767, 1234, "Henry Heller", 2);
-  REQUIRE_THROWS(atm.WithdrawCash(67657767, 1234, 100));
+  REQUIRE_THROWS(atm.WithdrawCash(67657767, 1234, -100));
+}
+
+TEST_CASE("Deposit", "[Deposit]") {
+  Atm atm;
+  atm.RegisterAccount(1, 1, "Aaron Judge", 1000000);
+  atm.Deposit(1, 1, 1.1);
+  REQUIRE(atm.CheckBalance(1, 1) == 1000001.1)
+}
+
+TEST_CASE("Print Ledger", "[Print Ledger]") {
+  Atm atm;
+  REQUIRE_THROWS(atm.PrintLedger("./test.txt", 1, 1));
 }
