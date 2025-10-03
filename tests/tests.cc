@@ -79,6 +79,10 @@ TEST_CASE("Register Account", "[Register Account]") {
   Atm atm;
   atm.RegisterAccount(8, 2394, "LeBron James", 80000);
   REQUIRE_THROWS_AS(atm.RegisterAccount(8, 2394, "LeBron James", 80000), std::invalid_argument)
-  
+}
 
+TEST_CASE("Withdraw Cash", "[Withdraw Cash]") {
+  Atm atm;
+  atm.RegisterAccount(67657767, 1234, "Henry Heller", 2);
+  REQUIRE_THROWS(atm.WithdrawCash(100));
 }
