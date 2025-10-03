@@ -90,8 +90,8 @@ TEST_CASE("Withdraw Cash", "[Withdraw Cash]") {
 TEST_CASE("Deposit", "[Deposit]") {
   Atm atm;
   atm.RegisterAccount(1, 1, "Aaron Judge", 1000000);
-  atm.Deposit(1, 1, 1.1);
-  REQUIRE(atm.CheckBalance(1, 1) == 1000001.1)
+  atm.DepositCash(1, 1, 1.1);
+  REQUIRE(atm.CheckBalance(1, 1) == 1000001.1);
 }
 
 TEST_CASE("Print Ledger", "[Print Ledger]") {
