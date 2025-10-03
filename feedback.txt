@@ -1,0 +1,13 @@
+Your test suite did not compile!
+
+tests/tests.cc:93:7: error: no member named 'Deposit' in 'Atm'
+   93 |   atm.Deposit(1, 1, 1.1);
+      |   ~~~ ^
+tests/tests.cc:94:47: error: expected ';' after do/while statement
+   94 |   REQUIRE(atm.CheckBalance(1, 1) == 1000001.1)
+      |                                               ^
+      |                                               ;
+2 errors generated.
+
+
+score: 0/5
